@@ -37,6 +37,47 @@ order by city_id DESC
 limit 5;
 ````
 
+##### When we want to explore our datasets, one handy tip is to find out how many rows are we dealing with: 
+````SQL
+SELECT
+  COUNT(*) AS row_count
+FROM dvd_rentals.film_list;
+````
+
+```GROUP BY```
+One way to think of the GROUP BY is to imagine our dataset being divided into different groups based off the values of selected columns.
+So for ```GROUP BY```, you have to use with aggregate functions such as COUNT, SUM, MEAN, MAX, MIN 
+this also results in the SQL returning 1 row per group
+
+
+#### Course 2 Questions 
+
+#### Q1:Which actor_id has the most number of unique film_id records in the dvd_rentals.film_actor table?
+
+so note that you cannot rename a column and try to ORDER BY the new name. Unless its a CTE or temp table. 
+````SQL
+select actor_id, COUNT(DISTINCT film_id)
+FROM dvd_rentals.film_actor
+group by actor_id
+order by COUNT(DISTINCT film_id) DESC
+limit 10;
+````
+
+### with temp_table alternative
+
+````SQL
+WITH temp_table as (
+select actor_id, COUNT(DISTINCT film_id) as unique
+FROM dvd_rentals.film_actor
+GROUP BY actor_id
+order by 2
+)
+
+select * 
+from temp_table
+````
+
+
 
 
 
