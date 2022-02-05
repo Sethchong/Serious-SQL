@@ -63,14 +63,14 @@ order by COUNT(DISTINCT film_id) DESC
 limit 10;
 ````
 
-### with temp_table alternative
+### with cte alternative
 
 ````SQL
 WITH temp_table as (
 select actor_id, COUNT(DISTINCT film_id) as unique
 FROM dvd_rentals.film_actor
 GROUP BY actor_id
-order by 2
+order by 2 DESC
 )
 
 select * 
