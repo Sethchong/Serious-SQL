@@ -98,6 +98,8 @@ limit 10;
 #### Q4: What percentage of overall total_sales does the Sports category make up in the dvd_rentals.sales_by_film_category table?
 
 so in this case, ROUND() is to round the value to 2 decimal places. 
+Also, the ::NUMERIC is the short form of casting. 
+The long form is ```CAST(column_name AS <new-data-type>)```
 
 
 ````SQL
@@ -105,6 +107,19 @@ select category, ROUND( 100* total_sales::NUMERIC / SUM(total_sales) OVER(), 2) 
 from dvd_rentals.sales_by_film_category
 limit 10
 ````
+![image](https://user-images.githubusercontent.com/67274884/152634615-cf03fd11-5b87-421d-8a10-455c046a54b8.png)
+
+
+ok so to give a little bit more context as to why we are using OVER() here. 
+if we remove OVER(), we have to use GROUP BY, and recall that GROUP BY will return 1 per row.
+````SQL
+select category, total_sales, ROUND( 100* total_sales::NUMERIC / SUM(total_sales), 2) as percentage
+from dvd_rentals.sales_by_film_category
+group by 1,2
+order by 2 desc
+````
+![image](https://user-images.githubusercontent.com/67274884/152634604-7d391042-07b6-4b93-abf8-6f2658380339.png)
+
   
 #### Q5: What percentage of unique fid values are in the Children category in the dvd_rentals.film_list table?
 
