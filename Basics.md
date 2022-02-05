@@ -50,7 +50,7 @@ So for ```GROUP BY```, you have to use with aggregate functions such as COUNT, S
 this also results in the SQL returning 1 row per group
 
 
-#### Course 2 Questions 
+### Course 2 Questions 
 
 #### Q1:Which actor_id has the most number of unique film_id records in the dvd_rentals.film_actor table?
 
@@ -87,8 +87,38 @@ order by 2 DESC
 limit 10;
 ````
 
+#### Q3: How many unique country_id values exist in the dvd_rentals.city table?
+
+````SQL
+select count(distinct country_id)
+from dvd_rentals.city
+limit 10;
+````
+
+#### Q4: What percentage of overall total_sales does the Sports category make up in the dvd_rentals.sales_by_film_category table?
+
+so in this case, ROUND() is to round the value to 2 decimal places. 
 
 
+````SQL
+select category, ROUND( 100* total_sales::NUMERIC / SUM(total_sales) OVER(), 2) as percentage
+from dvd_rentals.sales_by_film_category
+limit 10
+````
+  
+#### Q5: What percentage of unique fid values are in the Children category in the dvd_rentals.film_list table?
+
+````SQL
+SELECT
+  category,
+  ROUND(
+    100 * COUNT(DISTINCT fid)::NUMERIC / SUM(COUNT(DISTINCT fid)) OVER (),
+    2
+  ) AS percentage
+FROM dvd_rentals.film_list
+GROUP BY category
+ORDER BY category;
+````
 
 
 
