@@ -77,6 +77,17 @@ select *
 from temp_table
 ````
 
+#### Q2: How many distinct fid values are there for the 3rd most common price value in the dvd_rentals.nicer_but_slower_film_list table?
+
+````SQL
+select price, count(distinct fid)
+from dvd_rentals.nicer_but_slower_film_list
+group by 1
+order by 2 DESC
+limit 10;
+````
+
+
 
 
 
