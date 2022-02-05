@@ -120,6 +120,9 @@ order by 2 desc
 ````
 ![image](https://user-images.githubusercontent.com/67274884/152634604-7d391042-07b6-4b93-abf8-6f2658380339.png)
 
+
+### <a href="https://www.youtube.com/watch?v=7yp_QYBCEP4"> Youtube link that explains more on OVER()</a>
+
   
 #### Q5: What percentage of unique fid values are in the Children category in the dvd_rentals.film_list table?
 
