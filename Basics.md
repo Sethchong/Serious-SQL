@@ -137,9 +137,17 @@ FROM dvd_rentals.film_list
 GROUP BY category
 ORDER BY category;
 ````
+ROUND () code is to round the numbers to 2 decimal places and the code within count is to calculate percentage 
 
+#### Notes
 
+Another quick tip: 
+```` SQL
+SELECT COUNT(DISTINCT ID)
+FROM health.user_logs;
 
+````
+Distinct ID means we want to know how many distinct ID and COUNT is to count it 
 
 
 
