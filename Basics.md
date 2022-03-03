@@ -147,7 +147,44 @@ SELECT COUNT(DISTINCT ID)
 FROM health.user_logs;
 
 ````
-Distinct ID means we want to know how many distinct ID and COUNT is to count it 
+From the above code, Distinct ID means we want to know how many distinct ID and COUNT is to count it 
+
+### How to deal with duplicates
+
+Before we continue - we have to alwways check for duplicates - so we can write the most basic one such as COUNT(*)
+However, there are times when we cannot write COUNT(DISTINCT (*)) so we can also write a subquery: 
+```` SQL
+SELECT COUNT(*)
+FROM (
+  SELECT DISTINCT * 
+  FROM health.user_logs
+) AS subquery
+
+````
+in the above code, we want to have all the distinct rows first then we can count it 
+
+### Common Table Expression (CTE) 
+The most basic idea for CTE is to imagine we are changing the existing data and storingthe data outputs as a new reference - very similar to storing data in a new temporary excel sheet
+
+```` SQL
+WITH deduped_logs AS (
+  SELECT DISTINCT *
+  FROM health.user_logs
+)
+SELECT COUNT(*)
+FROM deduped_logs;
+
+````
+
+
+
+
+
+
+
+
+
+
 
 
 
