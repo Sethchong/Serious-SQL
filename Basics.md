@@ -201,6 +201,10 @@ order by duplicate_rows desc
 limit 10;
 ````
 
+so in the above codes - we want to write a cte to count how many duplicates in a for each row 
+
+then we want to sum the duplicates up and only select those > 1 and then we will be able to find out which id has the most duplicates 
+
 
 #### Q2 Second Highest Duplicate 
 Which log_date value had the most duplicate records after removing the max duplicate id value from question 1?
