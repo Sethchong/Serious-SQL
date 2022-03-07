@@ -282,7 +282,10 @@ limit 10;
 we first find out what is the total number of rows when measure is blood_pressure - then we want to sum those rows up so that we can find the total 
 so we take total_rows::NNUMERIC / overall_total to find the percentage 
 
-sum(count(*)) over () as overall_total - this line of code means that we want to sum all the count but also show the individual count against the sum 
+sum(count(*)) over () as overall_total - this line of code means that we want a col to show sum of all the count **AND** also show the individual count in another col 
+
+without this over() - we will only see 1 sum col and not the individual col 
+
 
 
 
