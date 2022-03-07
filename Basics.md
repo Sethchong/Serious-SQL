@@ -177,7 +177,46 @@ FROM deduped_logs;
 ````
 
 
+### Course 3 Questions
 
+#### Q1 Highest Duplicate 
+Which id value has the most number of duplicate records in the health.user_logs table?
+
+Note that in this case - we cannot do COUNT(DISTINCT *) in Postgre SQL 
+
+So we can use a subquery to get the same effect
+
+```` SQL
+WITH groupby AS(
+  select id, log_date, measure, measure_value, systolic, diastolic, count(*) AS numbers
+  from health.user_logs
+  group by id, log_date, measure, measure_value, systolic, diastolic
+)
+
+select id, sum(numbers) as duplicate_rows 
+from groupby
+where numbers >1
+group by id 
+order by duplicate_rows desc
+limit 10;
+````
+
+
+#### Q2 Second Highest Duplicate 
+Which log_date value had the most duplicate records after removing the max duplicate id value from question 1?
+
+#### Q3 Highest Occuring Value
+Which measure_value had the most occurences in the health.user_logs value when measure = 'weight'?
+
+#### Q4 Single and Total Duplicated Rows 
+How many single duplicated rows exist when measure = 'blood_pressure' in the health.user_logs? How about the total number of duplicate records in the same table?
+
+#### Q5 Percentage of Table Records
+What percentage of records measure_value = 0 when measure = 'blood_pressure' in the health.user_logs table? How many records are there also for this same condition?
+
+
+#### Q6 Percentage of Duplicates
+What percentage of records are duplicates in the health.user_logs table?
 
 
 
