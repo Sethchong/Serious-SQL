@@ -209,8 +209,39 @@ then we want to sum the duplicates up and only select those > 1 and then we will
 #### Q2 Second Highest Duplicate 
 Which log_date value had the most duplicate records after removing the max duplicate id value from question 1?
 
+````SQL
+with groupby as(
+  select id, log_date, measure, measure_value, systolic, diastolic, count(*) AS duplicate_numbers
+  from health.user_logs
+  where id != '054250c692e07a9fa9e62e345231df4b54ff435d'
+  group by id, log_date, measure, measure_value, systolic, diastolic
+)
+
+select log_date, sum(duplicate_numbers) as frequency 
+from groupby
+where duplicate_numbers > 1
+group by log_date
+order by frequency desc
+limit 10;
+
+````
+from the code above - we can just set a WHERE clause to filter the  max duplicate id value and then proceed to GROUP BY log_date to get what we need
+
+
 #### Q3 Highest Occuring Value
 Which measure_value had the most occurences in the health.user_logs value when measure = 'weight'?
+
+```` SQL 
+select measure_value, count(*) as frequency 
+from health.user_logs
+where measure = 'weight'
+group by measure_value
+order by frequency DESC
+limit 10;
+````
+Note that in this question - it is asking for occurances NOT duplicates 
+so you don't need to set up a cte to create a DISTINCT count 
+
 
 #### Q4 Single and Total Duplicated Rows 
 How many single duplicated rows exist when measure = 'blood_pressure' in the health.user_logs? How about the total number of duplicate records in the same table?
