@@ -245,13 +245,46 @@ so you don't need to set up a cte to create a DISTINCT count
 
 #### Q4 Single and Total Duplicated Rows 
 How many single duplicated rows exist when measure = 'blood_pressure' in the health.user_logs? How about the total number of duplicate records in the same table?
+````SQL
+
+with groupby as (
+  select id, log_date, measure, measure_value, systolic, diastolic, count(*) as duplicated_rows 
+  from health.user_logs
+  where measure = 'blood_pressure'
+  group by id, log_date, measure, measure_value, systolic, diastolic 
+)
+
+select measure, count(*) as single_dup_rows, SUM(duplicated_rows)
+from groupby
+where duplicated_rows > 1 
+group by measure
+limit 10;
+````
+
 
 #### Q5 Percentage of Table Records
 What percentage of records measure_value = 0 when measure = 'blood_pressure' in the health.user_logs table? How many records are there also for this same condition?
 
+````SQL
+with cte as (
+  select measure_value, count(*) as total_rows, sum(count(*)) over() as overall_total
+  from health.user_logs
+  where measure = 'blood_pressure'
+  group by 1
+)
 
-#### Q6 Percentage of Duplicates
-What percentage of records are duplicates in the health.user_logs table?
+select measure_value, total_rows, overall_total, ROUND(100* total_rows::NUMERIC / overall_total, 2) as percentage 
+from cte 
+where measure_value = 0
+limit 10;
+ ````
+ 
+we first find out what is the total number of rows when measure is blood_pressure - then we want to sum those rows up so that we can find the total 
+so we take total_rows::NNUMERIC / overall_total to find the percentage 
+
+sum(count(*)) over () as overall_total - this line of code means that we want to sum all the count but also show the individual count against the sum 
+
+
 
 
 
